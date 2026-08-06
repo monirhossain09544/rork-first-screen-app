@@ -7,6 +7,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -123,6 +124,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     var origin by rememberSaveable { mutableStateOf("") }
     var destination by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    val navigationBottomInset = WindowInsets.navigationBars
+        .asPaddingValues()
+        .calculateBottomPadding()
 
     Box(
         modifier = modifier
@@ -162,7 +166,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     PopularRoutesSection()
                     Spacer(modifier = Modifier.height(18.dp))
                     FareContributionBanner()
-                    Spacer(modifier = Modifier.height(96.dp))
+                    Spacer(modifier = Modifier.height(96.dp + navigationBottomInset))
                 }
             }
         }
@@ -787,17 +791,20 @@ private fun FareContributionBanner(modifier: Modifier = Modifier) {
 
 @Composable
 private fun HomeBottomNavigation(modifier: Modifier = Modifier) {
+    val navigationBottomInset = WindowInsets.navigationBars
+        .asPaddingValues()
+        .calculateBottomPadding()
+
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .height(88.dp)
+            .height(88.dp + navigationBottomInset)
     ) {
         Surface(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .height(70.dp),
+                .height(70.dp + navigationBottomInset),
             color = CardWhite,
             shape = RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp),
             border = androidx.compose.foundation.BorderStroke(1.dp, BottomBarBorder),
@@ -806,7 +813,8 @@ private fun HomeBottomNavigation(modifier: Modifier = Modifier) {
 
         Row(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
+                .align(Alignment.TopCenter)
+                .offset(y = 18.dp)
                 .fillMaxWidth()
                 .height(68.dp)
                 .padding(horizontal = 3.dp),
