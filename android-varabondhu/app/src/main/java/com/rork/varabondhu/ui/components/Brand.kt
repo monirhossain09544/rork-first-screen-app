@@ -17,7 +17,7 @@ import com.rork.varabondhu.ui.theme.BrandGreen
 import com.rork.varabondhu.ui.theme.Ink
 import com.rork.varabondhu.ui.theme.WordmarkStyle
 
-/** Intrinsic width / height of the trimmed `logo_pin.webp`. */
+/** Intrinsic width / height of the lossless, tightly trimmed `logo_pin.png`. */
 const val LOGO_ASPECT: Float = 389f / 512f
 
 /** Intrinsic width / height of `city_street.webp`. */

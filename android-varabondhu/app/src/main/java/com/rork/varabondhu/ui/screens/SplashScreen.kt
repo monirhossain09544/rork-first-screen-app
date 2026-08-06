@@ -99,9 +99,9 @@ private fun SplashContent(modifier: Modifier = Modifier) {
         ) {
             Spacer(modifier = Modifier.weight(0.21f))
 
-            BrandLogo(height = 121.dp)
+            BrandLogo(height = 150.dp)
 
-            Spacer(modifier = Modifier.height(26.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             VaraBondhuWordmark(fontSize = 45.sp)
 

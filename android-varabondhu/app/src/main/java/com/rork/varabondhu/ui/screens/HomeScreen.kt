@@ -84,8 +84,8 @@ private val HomeBackground = Color(0xFFFBFCFB)
 private val HeroGreen = Color(0xFFD9F5DB)
 private val DestinationRed = Color(0xFFE64A3B)
 private val NotificationRed = Color(0xFFE62F42)
-private val HeroHeight = 274.dp
-private val LandscapeHeight = 216.dp
+private val HeroHeight = 238.dp
+private val LandscapeHeight = 170.dp
 private val SectionGreen = Color(0xFF0B7B37)
 private val PromoMint = Color(0xFFE3F5E8)
 private val BottomBarBorder = Color(0xFFE7ECE8)
@@ -190,7 +190,7 @@ private fun HomeHero(modifier: Modifier = Modifier) {
         JourneyMessageCard(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(horizontal = 12.dp, vertical = 6.dp)
+                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
         )
 
         NotificationAction(
@@ -250,31 +250,31 @@ private fun JourneyMessageCard(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(140.dp)
+            .height(120.dp)
     ) {
         Surface(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .height(98.dp),
+                .height(86.dp),
             color = CardWhite.copy(alpha = 0.98f),
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(18.dp),
             shadowElevation = 1.dp
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 18.dp, end = 112.dp),
+                    .padding(start = 16.dp, end = 98.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = Icons.Outlined.LocationOn,
                     contentDescription = null,
                     tint = BrandGreen,
-                    modifier = Modifier.size(26.dp)
+                    modifier = Modifier.size(23.dp)
                 )
 
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
                 Column(verticalArrangement = Arrangement.Center) {
                     Text(
@@ -282,8 +282,8 @@ private fun JourneyMessageCard(modifier: Modifier = Modifier) {
                         color = Ink,
                         fontFamily = BanglaFamily,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 18.sp,
-                        lineHeight = 22.sp
+                        fontSize = 16.sp,
+                        lineHeight = 20.sp
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
@@ -305,9 +305,9 @@ private fun JourneyMessageCard(modifier: Modifier = Modifier) {
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(end = 7.dp)
-                .width(112.dp)
-                .height(158.dp)
+                .padding(end = 8.dp)
+                .width(98.dp)
+                .height(138.dp)
         )
     }
 }
