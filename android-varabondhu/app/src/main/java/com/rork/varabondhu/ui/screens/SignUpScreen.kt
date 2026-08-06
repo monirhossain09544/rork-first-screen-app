@@ -99,9 +99,9 @@ private val TermsRowHeight = 42.dp
 private val FooterHeight = 38.dp
 
 /** Share of the page the illustration aims for, and the bounds it stays inside. */
-private const val ART_FRACTION = 0.15f
-private val ArtMinHeight = 76.dp
-private val ArtMaxHeight = 132.dp
+private const val ART_FRACTION = 0.12f
+private val ArtMinHeight = 72.dp
+private val ArtMaxHeight = 104.dp
 
 /** Below this the illustration slot is too cramped to be worth showing. */
 private val ArtMinVisible = 64.dp
@@ -111,17 +111,15 @@ private val ArtMinVisible = 64.dp
  * becomes one deliberate space above the button, which reads as a docked action rather
  * than a hole in the middle of the form.
  */
-private val MaxGapStretch = 12.dp
-
-private val GapTop = AuthGap(base = 8, weight = 0.2f)
-private val GapAfterArt = AuthGap(base = 24, weight = 1.4f)
-private val GapAfterHeading = AuthGap(base = 6, weight = 0.15f)
-private val GapAfterSubtitle = AuthGap(base = 22, weight = 1.2f)
-private val GapBetweenFields = AuthGap(base = 16, weight = 0.35f)
-private val GapBeforeTerms = AuthGap(base = 14, weight = 0.3f)
-private val GapBeforeButton = AuthGap(base = 24, weight = 1.3f)
-private val GapBeforeFooter = AuthGap(base = 22, weight = 1.5f)
-private val GapBottom = AuthGap(base = 8, weight = 0.2f)
+private val GapTop = AuthGap(base = 8, weight = 0f)
+private val GapAfterArt = AuthGap(base = 16, weight = 0f)
+private val GapAfterHeading = AuthGap(base = 4, weight = 0f)
+private val GapAfterSubtitle = AuthGap(base = 16, weight = 0f)
+private val GapBetweenFields = AuthGap(base = 12, weight = 0f)
+private val GapBeforeTerms = AuthGap(base = 10, weight = 0f)
+private val GapBeforeButton = AuthGap(base = 18, weight = 0f)
+private val GapBeforeFooter = AuthGap(base = 20, weight = 0f)
+private val GapBottom = AuthGap(base = 12, weight = 0f)
 
 private val SignUpGaps = listOf(
     GapTop,
@@ -188,10 +186,9 @@ fun SignUpScreen(
             ) {
                 Spacer(modifier = Modifier.height(spacing[GapTop]))
 
-                // Flexible slot: it also absorbs the extra height an inline error adds.
                 ShieldIllustration(
                     target = metrics.artTarget,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.height(metrics.artTarget)
                 )
 
                 Spacer(modifier = Modifier.height(spacing[GapAfterArt]))
@@ -541,8 +538,9 @@ private class SignUpMetrics(
 )
 
 /**
- * Keeps the illustration small, lets every gap breathe up to a sensible ceiling, and
- * parks whatever is still left above the button so no gap in the form looks stretched.
+ * Keeps the illustration and every form gap within a compact responsive scale. Spare
+ * screen height is never injected between controls, so the same visual rhythm survives
+ * on both short and tall phones.
  */
 private fun signUpMetrics(pageHeight: Dp): SignUpMetrics {
     val fixed = HeadingHeight + SubtitleHeight + FieldHeight * 2 + TermsRowHeight +
@@ -552,10 +550,9 @@ private fun signUpMetrics(pageHeight: Dp): SignUpMetrics {
         gaps = SignUpGaps,
         room = pageHeight - fixed - artTarget,
         scale = authSpacingScale(pageHeight),
-        maxExtra = MaxGapStretch
+        maxExtra = 0.dp
     )
-    val airBeforeButton = (pageHeight - fixed - artTarget - spacing.total(SignUpGaps))
-        .coerceAtLeast(0.dp)
+    val airBeforeButton = 0.dp
 
     return SignUpMetrics(
         artTarget = artTarget,
