@@ -199,7 +199,7 @@ private fun HomeHero(modifier: Modifier = Modifier) {
         JourneyMessageCard(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(horizontal = 10.dp)
+                .padding(start = 10.dp, end = 10.dp, bottom = 8.dp)
         )
 
         NotificationAction(
