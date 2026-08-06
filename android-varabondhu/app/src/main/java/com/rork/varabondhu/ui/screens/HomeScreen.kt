@@ -183,6 +183,7 @@ private fun HomeHero(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(HeroHeight)
+            .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
             .background(HeroGreen)
     ) {
         Image(
@@ -198,7 +199,7 @@ private fun HomeHero(modifier: Modifier = Modifier) {
         JourneyMessageCard(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                .padding(horizontal = 10.dp)
         )
 
         NotificationAction(
