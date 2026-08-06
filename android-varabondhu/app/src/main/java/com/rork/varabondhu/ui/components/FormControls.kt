@@ -75,13 +75,13 @@ import com.rork.varabondhu.ui.theme.PlaceholderStyle
 private val FieldShape = RoundedCornerShape(12.dp)
 
 /** Height of a text input row. */
-val FieldHeight: Dp = 48.dp
+val FieldHeight: Dp = 50.dp
 
 /** Height of the filled primary action button. */
-val ControlHeight: Dp = 48.dp
+val ControlHeight: Dp = 50.dp
 
 /** Height of a social sign-in button. */
-val SocialHeight: Dp = 46.dp
+val SocialHeight: Dp = 48.dp
 
 /**
  * Bordered single-line input matching the VaraBondhu auth screens: leading glyph,

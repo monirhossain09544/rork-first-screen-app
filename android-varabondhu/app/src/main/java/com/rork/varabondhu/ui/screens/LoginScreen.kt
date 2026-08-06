@@ -77,15 +77,15 @@ private val DividerHeight = 22.dp
 private val FooterHeight = 38.dp
 
 // Never stretch this gap: it is the distance users read as artwork → welcome.
-private val GapTop = AuthGap(base = 14, weight = 0f)
-private val GapAfterHeading = AuthGap(base = 14, weight = 0f)
-private val GapBetweenFields = AuthGap(base = 12, weight = 0f)
-private val GapAfterFields = AuthGap(base = 6, weight = 0f)
-private val GapBeforeButton = AuthGap(base = 14, weight = 0f)
-private val GapBeforeDivider = AuthGap(base = 18, weight = 0f)
-private val GapAfterDivider = AuthGap(base = 14, weight = 0f)
-private val GapBeforeFooter = AuthGap(base = 20, weight = 0f)
-private val GapBottom = AuthGap(base = 18, weight = 0f)
+private val GapTop = AuthGap(base = 18, weight = 0f)
+private val GapAfterHeading = AuthGap(base = 20, weight = 1.1f)
+private val GapBetweenFields = AuthGap(base = 14, weight = 0.4f)
+private val GapAfterFields = AuthGap(base = 12, weight = 0.25f)
+private val GapBeforeButton = AuthGap(base = 20, weight = 1f)
+private val GapBeforeDivider = AuthGap(base = 20, weight = 1f)
+private val GapAfterDivider = AuthGap(base = 18, weight = 0.8f)
+private val GapBeforeFooter = AuthGap(base = 18, weight = 1.2f)
+private val GapBottom = AuthGap(base = 8, weight = 0.2f)
 
 private val SocialSheetGaps = listOf(
     GapTop,
@@ -272,9 +272,9 @@ private fun LoginSheet(
 private class LoginMetrics(val spacing: AuthSpacing, val showSocial: Boolean)
 
 /**
- * Uses one compact spacing rhythm on every screen. Short screens tighten that rhythm
- * proportionally; taller screens give their spare room to the artwork instead of inserting
- * arbitrary holes between controls.
+ * Gives the artwork roughly the upper third of the page and spreads the remainder through
+ * the form. The first sheet gap has no weight, so it always stays compact. On short screens
+ * the bottom-pinned sheet still wins and the artwork yields enough room for every control.
  */
 private fun loginMetrics(pageHeight: Dp): LoginMetrics {
     val showSocial = pageHeight >= SocialBlockMinHeight
@@ -289,12 +289,7 @@ private fun loginMetrics(pageHeight: Dp): LoginMetrics {
 
     val room = pageHeight - heroTarget + SheetOverlap - fixed
     return LoginMetrics(
-        spacing = authSpacing(
-            gaps = gaps,
-            room = room,
-            scale = authSpacingScale(pageHeight),
-            maxExtra = 0.dp
-        ),
+        spacing = authSpacing(gaps, room, authSpacingScale(pageHeight)),
         showSocial = showSocial
     )
 }
