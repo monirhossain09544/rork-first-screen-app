@@ -85,8 +85,8 @@ private val HomeBackground = Color(0xFFFBFCFB)
 private val HeroGreen = Color(0xFFD9F5DB)
 private val DestinationRed = Color(0xFFE64A3B)
 private val NotificationRed = Color(0xFFE62F42)
-private val HeroHeight = 238.dp
-private val LandscapeHeight = 170.dp
+private val HeroHeight = 224.dp
+private val LandscapeHeight = 150.dp
 private val SectionGreen = Color(0xFF0B7B37)
 private val PromoMint = Color(0xFFE3F5E8)
 private val BottomBarBorder = Color(0xFFE7ECE8)
@@ -372,26 +372,53 @@ private fun RouteSearchCard(
                 onClick = onSearch,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(12.dp),
+                    .height(44.dp),
+                shape = CircleShape,
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                    horizontal = 7.dp,
+                    vertical = 0.dp
+                ),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = ButtonGreen,
                     contentColor = Color.White
                 ),
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 1.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Search,
-                    contentDescription = null,
-                    modifier = Modifier.size(21.dp)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "যান খুঁজুন",
-                    fontFamily = BanglaFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 17.sp
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.align(Alignment.Center),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Search,
+                            contentDescription = null,
+                            modifier = Modifier.size(17.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = "যান খুঁজুন",
+                            fontFamily = BanglaFamily,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 14.sp,
+                            maxLines = 1
+                        )
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .size(32.dp)
+                            .clip(CircleShape)
+                            .background(Color.White.copy(alpha = 0.14f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.ChevronRight,
+                            contentDescription = "সার্চ শুরু করুন",
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
             }
         }
     }
