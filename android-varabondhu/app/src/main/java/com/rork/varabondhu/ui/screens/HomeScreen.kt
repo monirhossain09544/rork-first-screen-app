@@ -124,48 +124,52 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     var destination by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .background(HomeBackground)
     ) {
-        HomeHero()
+        Column(modifier = Modifier.fillMaxSize()) {
+            HomeHero()
 
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            color = CardWhite,
-            shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
-        ) {
-            Column(
+            Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
+                    .weight(1f),
+                color = CardWhite,
+                shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
             ) {
-                Spacer(modifier = Modifier.height(10.dp))
-                RouteSearchCard(
-                    origin = origin,
-                    onOriginChange = { origin = it },
-                    destination = destination,
-                    onDestinationChange = { destination = it },
-                    onSearch = { focusManager.clearFocus() },
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                )
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    RouteSearchCard(
+                        origin = origin,
+                        onOriginChange = { origin = it },
+                        destination = destination,
+                        onDestinationChange = { destination = it },
+                        onSearch = { focusManager.clearFocus() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp)
+                    )
 
-                Spacer(modifier = Modifier.height(18.dp))
-                RecentSearchSection()
-                Spacer(modifier = Modifier.height(18.dp))
-                PopularRoutesSection()
-                Spacer(modifier = Modifier.height(18.dp))
-                FareContributionBanner()
-                Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(18.dp))
+                    RecentSearchSection()
+                    Spacer(modifier = Modifier.height(18.dp))
+                    PopularRoutesSection()
+                    Spacer(modifier = Modifier.height(18.dp))
+                    FareContributionBanner()
+                    Spacer(modifier = Modifier.height(96.dp))
+                }
             }
         }
 
-        HomeBottomNavigation()
+        HomeBottomNavigation(
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 
