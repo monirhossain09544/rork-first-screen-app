@@ -1,7 +1,6 @@
 package com.rork.varabondhu.ui.components
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -9,7 +8,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,7 +41,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -78,13 +75,13 @@ import com.rork.varabondhu.ui.theme.PlaceholderStyle
 private val FieldShape = RoundedCornerShape(12.dp)
 
 /** Height of a text input row. */
-val FieldHeight: Dp = 56.dp
+val FieldHeight: Dp = 50.dp
 
 /** Height of the filled primary action button. */
-val ControlHeight: Dp = 54.dp
+val ControlHeight: Dp = 50.dp
 
 /** Height of a social sign-in button. */
-val SocialHeight: Dp = 50.dp
+val SocialHeight: Dp = 48.dp
 
 /**
  * Bordered single-line input matching the VaraBondhu auth screens: leading glyph,
@@ -201,12 +198,6 @@ fun PrimaryButton(
     isLoading: Boolean = false
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.975f else 1f,
-        animationSpec = tween(durationMillis = 110),
-        label = "buttonScale"
-    )
 
     Button(
         onClick = onClick,
@@ -223,7 +214,6 @@ fun PrimaryButton(
         modifier = modifier
             .fillMaxWidth()
             .height(ControlHeight)
-            .scale(scale)
     ) {
         if (isLoading) {
             CircularProgressIndicator(
@@ -249,12 +239,6 @@ fun SocialButton(
     modifier: Modifier = Modifier
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val scale by animateFloatAsState(
-        targetValue = if (isPressed) 0.98f else 1f,
-        animationSpec = tween(durationMillis = 110),
-        label = "socialScale"
-    )
 
     Button(
         onClick = onClick,
@@ -267,9 +251,7 @@ fun SocialButton(
         border = BorderStroke(width = 1.dp, color = FieldBorder),
         elevation = null,
         contentPadding = PaddingValues(horizontal = 8.dp),
-        modifier = modifier
-            .height(SocialHeight)
-            .scale(scale)
+        modifier = modifier.height(SocialHeight)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -283,7 +265,7 @@ fun SocialButton(
             Spacer(modifier = Modifier.width(9.dp))
             Text(
                 text = label,
-                style = ButtonLabelStyle.copy(fontSize = 15.sp, color = Ink),
+                style = ButtonLabelStyle.copy(fontSize = 14.sp, color = Ink),
                 maxLines = 1
             )
         }

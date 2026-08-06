@@ -182,7 +182,7 @@ private fun LoginSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 20.dp)
         ) {
             Spacer(modifier = Modifier.height(spacing[GapTop]))
 
@@ -216,7 +216,7 @@ private fun LoginSheet(
 
             Text(
                 text = "পাসওয়ার্ড ভুলে গেছেন?",
-                style = LinkStyle.copy(fontSize = 14.sp),
+                style = LinkStyle.copy(fontSize = 13.sp),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -238,7 +238,7 @@ private fun LoginSheet(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     SocialButton(
                         label = "Google",

@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -98,9 +99,9 @@ private val TermsRowHeight = 42.dp
 private val FooterHeight = 38.dp
 
 /** Share of the page the illustration aims for, and the bounds it stays inside. */
-private const val ART_FRACTION = 0.18f
-private val ArtMinHeight = 88.dp
-private val ArtMaxHeight = 164.dp
+private const val ART_FRACTION = 0.15f
+private val ArtMinHeight = 76.dp
+private val ArtMaxHeight = 132.dp
 
 /** Below this the illustration slot is too cramped to be worth showing. */
 private val ArtMinVisible = 64.dp
@@ -110,7 +111,7 @@ private val ArtMinVisible = 64.dp
  * becomes one deliberate space above the button, which reads as a docked action rather
  * than a hole in the middle of the form.
  */
-private val MaxGapStretch = 20.dp
+private val MaxGapStretch = 12.dp
 
 private val GapTop = AuthGap(base = 8, weight = 0.2f)
 private val GapAfterArt = AuthGap(base = 24, weight = 1.4f)
@@ -183,7 +184,7 @@ fun SignUpScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp)
+                    .padding(horizontal = 20.dp)
             ) {
                 Spacer(modifier = Modifier.height(spacing[GapTop]))
 
@@ -205,7 +206,10 @@ fun SignUpScreen(
                         val exit = slideOutHorizontally(animationSpec = tween(280)) { width ->
                             -direction * width / 4
                         } + fadeOut(animationSpec = tween(160))
-                        enter togetherWith exit using SizeTransform(clip = false)
+                        enter togetherWith exit using SizeTransform(
+                            clip = true,
+                            sizeAnimationSpec = { _, _ -> snap() }
+                        )
                     },
                     label = "signUpStep"
                 ) { step ->
@@ -326,8 +330,8 @@ private fun StepBlock(
         Text(
             text = heading,
             style = TaglineStyle.copy(
-                fontSize = 20.sp,
-                lineHeight = HeadingHeight.value.sp,
+                fontSize = 18.sp,
+                lineHeight = 26.sp,
                 fontWeight = FontWeight.Bold
             ),
             textAlign = TextAlign.Center,
@@ -339,7 +343,7 @@ private fun StepBlock(
 
         Text(
             text = subtitle,
-            style = BodyMutedStyle.copy(fontSize = 14.sp, lineHeight = SubtitleHeight.value.sp),
+            style = BodyMutedStyle.copy(fontSize = 13.sp, lineHeight = 19.sp),
             textAlign = TextAlign.Center,
             maxLines = 1,
             modifier = Modifier.fillMaxWidth()
@@ -383,7 +387,7 @@ private fun PrivacyNote(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.width(10.dp))
         Text(
             text = "নম্বরটি শুধু অ্যাকাউন্ট যাচাইয়ে ব্যবহার হবে, কারো সাথে শেয়ার করা হবে না",
-            style = BodyMutedStyle.copy(fontSize = 13.sp, lineHeight = 18.sp),
+            style = BodyMutedStyle.copy(fontSize = 12.sp, lineHeight = 17.sp),
             maxLines = 2
         )
     }
@@ -410,8 +414,8 @@ private fun SignUpHeader(step: SignUpStep, onBack: () -> Unit, modifier: Modifie
         Text(
             text = "সাইন আপ করুন",
             style = TaglineStyle.copy(
-                fontSize = 19.sp,
-                lineHeight = 26.sp,
+                fontSize = 18.sp,
+                lineHeight = 24.sp,
                 fontWeight = FontWeight.Bold
             ),
             maxLines = 1
@@ -516,7 +520,7 @@ private fun TermsRow(
                     ) { append("গোপনীয়তা নীতিমালা") }
                     append(" পড়েছি এবং সম্মত")
                 },
-                style = TaglineStyle.copy(fontSize = 13.5.sp, lineHeight = 19.sp)
+                style = TaglineStyle.copy(fontSize = 12.sp, lineHeight = 17.sp)
             )
         }
         if (errorText != null) {

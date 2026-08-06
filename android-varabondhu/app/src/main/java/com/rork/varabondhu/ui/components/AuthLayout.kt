@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rork.varabondhu.R
@@ -140,44 +142,48 @@ fun AuthPage(
             .coerceAtLeast(0.dp)
 
         val scrollState = rememberScrollState()
+        val isKeyboardOpen = keyboard > 0.dp
+        val stableDensity = remember(density.density) {
+            Density(density = density.density, fontScale = 1f)
+        }
 
-        Column(modifier = Modifier.fillMaxSize()) {
-            if (topInset > 0.dp) {
-                Spacer(modifier = Modifier.height(topInset))
-            }
-            if (header != null) {
+        CompositionLocalProvider(LocalDensity provides stableDensity) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                if (topInset > 0.dp) {
+                    Spacer(modifier = Modifier.height(topInset))
+                }
+                if (header != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(headerHeight)
+                    ) {
+                        header()
+                    }
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(headerHeight)
+                        .weight(1f)
+                        // The page is locked while the keyboard is closed, preventing
+                        // elastic overscroll and accidental whole-screen movement.
+                        .padding(bottom = (keyboard - lostHeight).coerceAtLeast(0.dp))
+                        .verticalScroll(scrollState, enabled = isKeyboardOpen)
                 ) {
-                    header()
+                    RestingPage(
+                        pageHeight = pageHeight,
+                        tail = keyboardTail(pageWidth, pageHeight),
+                        content = { content(pageWidth, pageHeight) }
+                    )
                 }
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    // Only the viewport shrinks; the page inside keeps its resting size.
-                    .padding(bottom = (keyboard - lostHeight).coerceAtLeast(0.dp))
-                    .verticalScroll(scrollState)
-            ) {
-                RestingPage(
-                    pageHeight = pageHeight,
-                    tail = keyboardTail(pageWidth, pageHeight),
-                    content = { content(pageWidth, pageHeight) }
-                )
-            }
-            if (bottomInset > 0.dp) {
-                Spacer(modifier = Modifier.height(bottomInset))
+                if (bottomInset > 0.dp) {
+                    Spacer(modifier = Modifier.height(bottomInset))
+                }
             }
         }
 
-        val isKeyboardOpen = keyboard > 0.dp
         LaunchedEffect(isKeyboardOpen, scrollState.maxValue) {
-            if (isKeyboardOpen) {
-                scrollState.scrollTo(scrollState.maxValue)
-            }
+            scrollState.scrollTo(if (isKeyboardOpen) scrollState.maxValue else 0)
         }
     }
 }
