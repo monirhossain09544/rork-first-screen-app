@@ -97,13 +97,13 @@ private fun SplashContent(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.weight(0.21f))
+            Spacer(modifier = Modifier.weight(0.25f))
 
-            BrandLogo(height = 150.dp)
+            BrandLogo(height = 120.dp)
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            VaraBondhuWordmark(fontSize = 45.sp)
+            VaraBondhuWordmark(fontSize = 36.sp)
 
             Spacer(modifier = Modifier.height(16.dp))
 

@@ -120,7 +120,11 @@ private val popularRoutes: List<PopularRoute> = listOf(
 
 /** Complete Home experience with route search, discovery content, contribution, and navigation. */
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    onNavigateToVaraDin: () -> Unit = {},
+    onNavigateToFareResult: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
     var origin by rememberSaveable { mutableStateOf("") }
     var destination by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
@@ -154,7 +158,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         onOriginChange = { origin = it },
                         destination = destination,
                         onDestinationChange = { destination = it },
-                        onSearch = { focusManager.clearFocus() },
+                        onSearch = { 
+                            focusManager.clearFocus()
+                            onNavigateToFareResult()
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp)
@@ -165,13 +172,16 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     Spacer(modifier = Modifier.height(18.dp))
                     PopularRoutesSection()
                     Spacer(modifier = Modifier.height(18.dp))
-                    FareContributionBanner()
+                    FareContributionBanner(
+                        onNavigateToVaraDin = onNavigateToVaraDin
+                    )
                     Spacer(modifier = Modifier.height(96.dp + navigationBottomInset))
                 }
             }
         }
 
         HomeBottomNavigation(
+            onNavigateToVaraDin = onNavigateToVaraDin,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
@@ -747,7 +757,10 @@ private fun PopularRouteCard(
 }
 
 @Composable
-private fun FareContributionBanner(modifier: Modifier = Modifier) {
+private fun FareContributionBanner(
+    onNavigateToVaraDin: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
@@ -792,7 +805,7 @@ private fun FareContributionBanner(modifier: Modifier = Modifier) {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
-                    onClick = {},
+                    onClick = onNavigateToVaraDin,
                     modifier = Modifier
                         .align(Alignment.End)
                         .width(78.dp)
@@ -818,7 +831,10 @@ private fun FareContributionBanner(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun HomeBottomNavigation(modifier: Modifier = Modifier) {
+private fun HomeBottomNavigation(
+    onNavigateToVaraDin: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val navigationBottomInset = WindowInsets.navigationBars
         .asPaddingValues()
         .calculateBottomPadding()
@@ -874,6 +890,7 @@ private fun HomeBottomNavigation(modifier: Modifier = Modifier) {
         }
 
         AddFareNavItem(
+            onClick = onNavigateToVaraDin,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .width(76.dp)
@@ -917,13 +934,16 @@ private fun BottomNavItem(
 }
 
 @Composable
-private fun AddFareNavItem(modifier: Modifier = Modifier) {
+private fun AddFareNavItem(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Surface(
-            onClick = {},
+            onClick = onClick,
             modifier = Modifier.size(52.dp),
             shape = CircleShape,
             color = ButtonGreen,

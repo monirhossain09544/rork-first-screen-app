@@ -1,6 +1,7 @@
 package com.rork.varabondhu.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -119,6 +120,7 @@ private val LeanSheetGaps = listOf(
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
     onNavigateToSignUp: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit,
     viewModel: LoginViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -154,7 +156,8 @@ fun LoginScreen(
                         // Temporary prototype shortcut: test Home without entering credentials.
                         onSubmit = onLoginSuccess,
                         onSocialClick = onLoginSuccess,
-                        onNavigateToSignUp = onNavigateToSignUp
+                        onNavigateToSignUp = onNavigateToSignUp,
+                        onNavigateToForgotPassword = onNavigateToForgotPassword
                     )
                 }
             )
@@ -172,6 +175,7 @@ private fun LoginSheet(
     onSubmit: () -> Unit,
     onSocialClick: () -> Unit,
     onNavigateToSignUp: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -218,7 +222,10 @@ private fun LoginSheet(
                 text = "পাসওয়ার্ড ভুলে গেছেন?",
                 style = LinkStyle.copy(fontSize = 13.sp),
                 textAlign = TextAlign.End,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigateToForgotPassword() }
+                    .padding(vertical = 4.dp)
             )
 
             Spacer(modifier = Modifier.height(spacing[GapBeforeButton]))
@@ -312,7 +319,7 @@ private fun tailBelowButton(metrics: LoginMetrics): Dp {
 @Composable
 private fun LoginScreenPreview() {
     AppTheme {
-        LoginScreen(onLoginSuccess = {}, onNavigateToSignUp = {})
+        LoginScreen(onLoginSuccess = {}, onNavigateToSignUp = {}, onNavigateToForgotPassword = {})
     }
 }
 
@@ -320,7 +327,7 @@ private fun LoginScreenPreview() {
 @Composable
 private fun LoginScreenSmallPreview() {
     AppTheme {
-        LoginScreen(onLoginSuccess = {}, onNavigateToSignUp = {})
+        LoginScreen(onLoginSuccess = {}, onNavigateToSignUp = {}, onNavigateToForgotPassword = {})
     }
 }
 
@@ -328,6 +335,6 @@ private fun LoginScreenSmallPreview() {
 @Composable
 private fun LoginScreenLargePreview() {
     AppTheme {
-        LoginScreen(onLoginSuccess = {}, onNavigateToSignUp = {})
+        LoginScreen(onLoginSuccess = {}, onNavigateToSignUp = {}, onNavigateToForgotPassword = {})
     }
 }
