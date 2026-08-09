@@ -765,7 +765,7 @@ private fun FareContributionBanner(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
-            .height(112.dp),
+            .height(124.dp),
         color = PromoMint,
         shape = RoundedCornerShape(17.dp)
     ) {
@@ -784,47 +784,50 @@ private fun FareContributionBanner(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 106.dp, top = 13.dp, end = 10.dp, bottom = 10.dp)
+                    .padding(start = 90.dp, end = 90.dp),
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "আপনার ভাড়া দিন, সবার উপকার করুন",
+                    text = "আপনার ভাড়া দিন, সবার উপকার করুন",
                     color = Ink,
                     fontFamily = BanglaFamily,
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp,
-                    lineHeight = 18.sp,
-                    maxLines = 1,
+                    fontSize = 15.sp,
+                    lineHeight = 20.sp,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = "আপনার দেওয়া সঠিক তথ্য অন্যদের\nসঠিক সিদ্ধান্ত নিতে সাহায্য করবে।",
-                    color = InkMuted,
+                    text = "আপনার দেওয়া সঠিক তথ্য অন্যদের\nসঠিক সিদ্ধান্ত নিতে সাহায্য করবে।",
+                    color = Ink,
                     fontFamily = BanglaFamily,
-                    fontSize = 10.sp,
-                    lineHeight = 13.sp
+                    fontSize = 11.sp,
+                    lineHeight = 15.sp
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    onClick = onNavigateToVaraDin,
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .width(78.dp)
-                        .height(34.dp),
-                    shape = RoundedCornerShape(9.dp),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = ButtonGreen,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(
-                        text = "ভাড়া দিন",
-                        fontFamily = BanglaFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 12.sp,
-                        maxLines = 1
-                    )
-                }
+            }
+            
+            Button(
+                onClick = onNavigateToVaraDin,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 12.dp, bottom = 20.dp)
+                    .width(78.dp)
+                    .height(34.dp),
+                shape = RoundedCornerShape(9.dp),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = ButtonGreen,
+                    contentColor = Color.White
+                )
+            ) {
+                Text(
+                    text = "ভাড়া দিন",
+                    fontFamily = BanglaFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 12.sp,
+                    maxLines = 1
+                )
             }
         }
     }

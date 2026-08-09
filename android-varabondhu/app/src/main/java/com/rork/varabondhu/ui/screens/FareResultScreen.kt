@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -84,7 +85,7 @@ fun FareResultScreen(
             ResultTopAppBar(onNavigateBack = onNavigateBack)
         },
         bottomBar = {
-            StickyInfoBanner()
+            // Removed StickyInfoBanner as requested
         },
         containerColor = PageWhite
     ) { innerPadding ->
@@ -92,22 +93,27 @@ fun FareResultScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
             RouteSummaryCard()
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             VehicleFilterTabs()
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             
-            mockResults.forEach { result ->
-                FareResultCard(result = result)
-                Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                mockResults.forEach { result ->
+                    FareResultCard(result = result)
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+                
+                Spacer(modifier = Modifier.height(24.dp))
             }
-            
-            Spacer(modifier = Modifier.height(80.dp)) // space for bottom banner
         }
     }
 }
@@ -184,7 +190,7 @@ fun RouteSummaryCard() {
         shadowElevation = 2.dp
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -203,7 +209,7 @@ fun RouteSummaryCard() {
                     // Dashed line
                     Box(
                         modifier = Modifier
-                            .height(24.dp)
+                            .height(16.dp)
                             .width(2.dp)
                             .background(Color.LightGray) // We should use a custom dashed line modifier, but solid is fine for quick placeholder
                     )
@@ -228,7 +234,7 @@ fun RouteSummaryCard() {
                         fontSize = 15.sp,
                         color = Ink
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "ফার্মগেট",
                         fontFamily = BanglaFamily,
@@ -257,7 +263,7 @@ fun RouteSummaryCard() {
             }
 
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 12.dp),
+                modifier = Modifier.padding(vertical = 8.dp),
                 color = com.rork.varabondhu.ui.theme.FieldBorder
             )
 
@@ -382,30 +388,41 @@ fun FareResultCard(result: VehicleResult) {
         border = androidx.compose.foundation.BorderStroke(1.dp, com.rork.varabondhu.ui.theme.FieldBorder)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
             // Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.Top
             ) {
-                androidx.compose.foundation.Image(
-                    painter = androidx.compose.ui.res.painterResource(id = result.imageRes),
-                    contentDescription = result.title,
-                    modifier = Modifier.width(80.dp).height(56.dp),
-                    contentScale = ContentScale.Fit
-                )
-                Spacer(modifier = Modifier.width(16.dp))
+                Box(
+                    modifier = Modifier.width(90.dp).height(50.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    androidx.compose.foundation.Image(
+                        painter = androidx.compose.ui.res.painterResource(id = result.imageRes),
+                        contentDescription = result.title,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .graphicsLayer(
+                                scaleX = 1.5f,
+                                scaleY = 1.5f,
+                                translationX = -40f
+                            ),
+                        contentScale = ContentScale.Fit
+                    )
+                }
+                Spacer(modifier = Modifier.width(4.dp))
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = result.title,
                         fontFamily = BanglaFamily,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
+                        fontSize = 15.sp,
                         color = Ink
                     )
                     if (result.badge != null) {
-                        Spacer(modifier = Modifier.height(6.dp))
+                        Spacer(modifier = Modifier.height(2.dp))
                         Surface(
                             shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
                             color = result.badgeColor
@@ -416,28 +433,32 @@ fun FareResultCard(result: VehicleResult) {
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 10.sp,
                                 color = result.badgeTextColor,
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                             )
                         }
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             HorizontalDivider(color = com.rork.varabondhu.ui.theme.FieldBorder, thickness = 1.dp)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             // Pricing Area
             if (result.isSecondaryRoutes) {
                 // Bus layout
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
                         Text(
-                            text = "${result.primaryPriceTitle}: ",
+                            text = result.primaryPriceTitle,
                             fontFamily = BanglaFamily,
-                            fontSize = 13.sp,
+                            fontSize = 12.sp,
                             color = com.rork.varabondhu.ui.theme.InkMuted
                         )
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = result.primaryPrice,
                             fontFamily = BanglaFamily,
@@ -446,21 +467,51 @@ fun FareResultCard(result: VehicleResult) {
                             color = BrandGreen
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = result.secondaryPriceTitle,
-                        fontFamily = BanglaFamily,
-                        fontSize = 13.sp,
-                        color = com.rork.varabondhu.ui.theme.InkMuted
+                    Box(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .height(36.dp)
+                            .background(com.rork.varabondhu.ui.theme.FieldBorder)
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "মিরপুর লিংক, বিহঙ্গ, শিকড়", // Mocked routes
-                        fontFamily = BanglaFamily,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 13.sp,
-                        color = Ink
-                    )
+                    Column(modifier = Modifier.weight(1.4f).padding(start = 12.dp), horizontalAlignment = Alignment.Start) {
+                        Text(
+                            text = result.secondaryPriceTitle,
+                            fontFamily = BanglaFamily,
+                            fontSize = 12.sp,
+                            color = com.rork.varabondhu.ui.theme.InkMuted
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            listOf("রুট ১", "রুট ২", "রুট ৩").forEach { route ->
+                                Surface(
+                                    shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
+                                    color = Color.Transparent,
+                                    border = androidx.compose.foundation.BorderStroke(1.dp, com.rork.varabondhu.ui.theme.FieldBorder)
+                                ) {
+                                    Text(
+                                        text = route,
+                                        fontFamily = BanglaFamily,
+                                        fontSize = 10.sp,
+                                        color = Ink,
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                    )
+                                }
+                            }
+                            Surface(
+                                shape = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
+                                color = BrandGreen.copy(alpha = 0.1f)
+                            ) {
+                                Text(
+                                    text = "+2",
+                                    fontFamily = BanglaFamily,
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = BrandGreen,
+                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
+                    }
                 }
             } else {
                 // Rickshaw / CNG layout
@@ -468,12 +519,12 @@ fun FareResultCard(result: VehicleResult) {
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = result.primaryPriceTitle,
                                 fontFamily = BanglaFamily,
-                                fontSize = 13.sp,
+                                fontSize = 12.sp,
                                 color = com.rork.varabondhu.ui.theme.InkMuted
                             )
                             Spacer(modifier = Modifier.width(4.dp))
@@ -481,30 +532,30 @@ fun FareResultCard(result: VehicleResult) {
                                 imageVector = androidx.compose.material.icons.Icons.Outlined.Info,
                                 contentDescription = null,
                                 tint = com.rork.varabondhu.ui.theme.InkMuted,
-                                modifier = Modifier.size(14.dp)
+                                modifier = Modifier.size(12.dp)
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = result.primaryPrice,
                             fontFamily = BanglaFamily,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp,
+                            fontSize = 18.sp,
                             color = BrandGreen
                         )
                     }
                     Box(
                         modifier = Modifier
                             .width(1.dp)
-                            .height(48.dp)
+                            .height(36.dp)
                             .background(com.rork.varabondhu.ui.theme.FieldBorder)
                     )
-                    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(modifier = Modifier.weight(1f).padding(start = 12.dp), horizontalAlignment = Alignment.Start) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = result.secondaryPriceTitle,
                                 fontFamily = BanglaFamily,
-                                fontSize = 13.sp,
+                                fontSize = 12.sp,
                                 color = com.rork.varabondhu.ui.theme.InkMuted
                             )
                             Spacer(modifier = Modifier.width(4.dp))
@@ -512,24 +563,24 @@ fun FareResultCard(result: VehicleResult) {
                                 imageVector = androidx.compose.material.icons.Icons.Outlined.Info,
                                 contentDescription = null,
                                 tint = com.rork.varabondhu.ui.theme.InkMuted,
-                                modifier = Modifier.size(14.dp)
+                                modifier = Modifier.size(12.dp)
                             )
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = result.secondaryPrice,
                             fontFamily = BanglaFamily,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
+                            fontSize = 15.sp,
                             color = Ink
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             HorizontalDivider(color = com.rork.varabondhu.ui.theme.FieldBorder, thickness = 1.dp)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             // Stats
             Row(
@@ -543,14 +594,14 @@ fun FareResultCard(result: VehicleResult) {
                     value = result.reportsCount,
                     valueColor = Ink
                 )
-                Box(modifier = Modifier.width(1.dp).height(32.dp).background(com.rork.varabondhu.ui.theme.FieldBorder))
+                Box(modifier = Modifier.width(1.dp).height(20.dp).background(com.rork.varabondhu.ui.theme.FieldBorder))
                 StatItem(
                     icon = androidx.compose.material.icons.Icons.Outlined.AccessTime,
                     label = "আপডেট হয়েছে",
                     value = result.lastUpdated,
                     valueColor = Ink
                 )
-                Box(modifier = Modifier.width(1.dp).height(32.dp).background(com.rork.varabondhu.ui.theme.FieldBorder))
+                Box(modifier = Modifier.width(1.dp).height(20.dp).background(com.rork.varabondhu.ui.theme.FieldBorder))
                 StatItem(
                     icon = androidx.compose.material.icons.Icons.Outlined.VerifiedUser,
                     label = "বিশ্বাসযোগ্যতা",
@@ -560,7 +611,9 @@ fun FareResultCard(result: VehicleResult) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(4.dp))
+            HorizontalDivider(color = com.rork.varabondhu.ui.theme.FieldBorder, thickness = 1.dp)
+            Spacer(modifier = Modifier.height(4.dp))
 
             // Details Action
             Row(
@@ -572,7 +625,7 @@ fun FareResultCard(result: VehicleResult) {
                     text = "বিস্তারিত দেখুন ",
                     fontFamily = BanglaFamily,
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     color = BrandGreen
                 )
                 Spacer(modifier = Modifier.width(4.dp))
@@ -580,7 +633,7 @@ fun FareResultCard(result: VehicleResult) {
                     imageVector = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = null,
                     tint = BrandGreen,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(14.dp)
                 )
             }
         }

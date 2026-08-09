@@ -37,7 +37,7 @@ val InkMuted: Color = Color(0xFF6B7A70)
 
 /** Sheet / page surfaces. */
 val CardWhite: Color = Color(0xFFFFFFFF)
-val PageWhite: Color = Color(0xFFFDFEFD)
+val PageWhite: Color = Color(0xFFF0F3F1)
 
 /** Input field chrome. */
 val FieldBorder: Color = Color(0xFFE8ECE9)

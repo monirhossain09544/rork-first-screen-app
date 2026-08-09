@@ -114,7 +114,7 @@ fun VaraDinScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .padding(horizontal = 8.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(onClick = onNavigateBack, modifier = Modifier.size(40.dp)) {
@@ -181,7 +181,7 @@ fun VaraDinScreen(
                             onClick = { /* Submit logic */ },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
+                                .padding(horizontal = 8.dp)
                                 .height(52.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = BrandGreen)
@@ -213,7 +213,7 @@ fun VaraDinScreen(
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(start = 8.dp, end = 8.dp, top = 0.dp, bottom = 8.dp),
                 shape = RoundedCornerShape(16.dp),
                 color = CardWhite,
                 shadowElevation = 2.dp
@@ -360,7 +360,7 @@ fun VaraDinScreen(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Ink,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
             
@@ -393,14 +393,14 @@ fun VaraDinScreen(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Ink,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
 
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 8.dp)
                     .height(48.dp),
                 shape = RoundedCornerShape(12.dp),
                 color = CardWhite,
@@ -438,7 +438,7 @@ fun VaraDinScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 quickAmounts.forEach { amount ->
@@ -472,14 +472,14 @@ fun VaraDinScreen(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Ink,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Surface(
@@ -531,14 +531,14 @@ fun VaraDinScreen(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Ink,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
 
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 8.dp)
                     .height(100.dp),
                 shape = RoundedCornerShape(12.dp),
                 color = CardWhite,
@@ -578,7 +578,7 @@ fun VaraDinScreen(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Ink,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -586,14 +586,14 @@ fun VaraDinScreen(
                 fontFamily = BanglaFamily,
                 fontSize = 11.sp,
                 color = InkMuted,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 val dashColor = BrandGreen.copy(alpha = 0.5f)
@@ -660,7 +660,7 @@ fun VaraDinScreen(
                     onClick = { /* Submit logic */ },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                        .padding(horizontal = 8.dp)
                         .height(52.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = BrandGreen)
